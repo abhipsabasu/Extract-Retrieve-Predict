@@ -33,8 +33,9 @@ To extract locations from captions (in English) mentioning a certain entity usin
 python gemini_llm_batch.py --newcsvpath [path to the csv file containing $\mathcal{D}_e$] --text_col [the name of the column containing the English captions]
 ```
 
-To retrieve the top 10 matching locations with respect to the extracted ones per caption, run the following code:
+To retrieve the top 10 matching locations with respect to the extracted ones per caption, first create a faiss index to efficiently store and query locations and their country names with population >= 10K, and then use the created index (data/faiss_index.bin) to retrieve the similar locations:
 ```bash
+python faiss_index_geonames.py
 python loc_to_faiss_country.py --csvpath [path to the csv file containing $\mathcal{D}_e$ with locations extracted] --col [name of the column containing the extracted locations]
 ```
 
