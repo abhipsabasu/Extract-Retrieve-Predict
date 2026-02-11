@@ -16,7 +16,7 @@ The directory structure is as follows:
 
 `data`: Directory having important details, like country-wise GDP, country-continent mapping, etc. 
 
-`data/evaluation_data.csv`: Consists of the 65000 sentences whose ground truth countries and corresponding predictions of the Extract-Retrieve-Predict pipeline are provided in the csv. The csv file contains all the evaluation datasets: a. the self annotated $\mathcal{D}_{\text{self}}$ (set the data column value to 2), b. the captions on marginalized countries $\mathcal{D}_{\text{marginalized}}$ (set the data column value to 0), and c. the captions curated using locations from the GeoNames dataset $\mathcal{D}_{\text{geo}}$ (set the data column value to 1).
+`data/evaluation_data.csv`: Consists of the 65000 sentences whose ground truth countries and corresponding predictions of the Extract-Retrieve-Predict pipeline are provided in the csv. The csv file contains all the evaluation datasets: a. the self annotated $\mathcal{D}$ (set the data column value to 2), b. the captions on marginalized countries $\mathcal{D}_{\text{marginalized}}$ (set the data column value to 0), and c. the captions curated using locations from the GeoNames dataset $\mathcal{D}_{\text{geo}}$ (set the data column value to 1).
 
 `models`: Directory having the SVM trained models for each entity.
 
