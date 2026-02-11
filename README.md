@@ -16,7 +16,7 @@ The directory structure is as follows:
 
 `data`: Directory having important details, like country-wise GDP, country-continent mapping, etc. 
 
-`data/evaluation_data.csv`: Consists of the 65000 sentences whose ground truth and gemini's country predictions are provided in the csv. The csv file contains all the evaluation datasets: a. the self annotated $\mathcal{D}_{\text{self}}$ (set the data column value to 2), b. the captions on marginalized countries $\mathcal{D}_{\text{marginalized}}$ (set the data column value to 0), and c. the captions curated using locations from the GeoNames dataset $\mathcal{D}_{\text{geo}}$ (set the data column value to 1).
+`data/evaluation_data.csv`: Consists of the 65000 sentences whose ground truth countries and corresponding predictions of the Extract-Retrieve-Predict pipeline are provided in the csv. The csv file contains all the evaluation datasets: a. the self annotated $\mathcal{D}_{\text{self}}$ (set the data column value to 2), b. the captions on marginalized countries $\mathcal{D}_{\text{marginalized}}$ (set the data column value to 0), and c. the captions curated using locations from the GeoNames dataset $\mathcal{D}_{\text{geo}}$ (set the data column value to 1).
 
 `models`: Directory having the SVM trained models for each entity.
 
@@ -69,11 +69,12 @@ python find_distribution_combine.py --column [column name containing the names o
 
 ## Diversity
 
-To calculate how diverse the images are for a given noun and country,  
-first install the vendi-score library.
+To calculate how diverse the images are for a given noun and country, first install the vendi-score library. Once done, replace the embedding model with the CLIP ViT/32 encoder in image_utils.py and text_utils.py. 
+
 ```bash
 pip install vendi_score
 ```
+
 Go the location where the library is stored, and modify vendi_score/image_utils.py and vendi_score/text_utils.py to change the underlying feature encoder to CLIP ViTB/32. Then run the following code.
 ```bash
 CUDA_VISIBLE_DEVICES=0 python image_diversity.py --noun [entity] --csv-path [path to the csv file containing the captions and image paths] --img_directory [image-directory] --dataset [laion-en, datacomp, Jap, Hin, Gre, Spa] --country-col [column name containing the geo-profiled country name] --annotation-col [column name containing the entity-presence classifier predictions] --vendi
@@ -82,4 +83,20 @@ CUDA_VISIBLE_DEVICES=0 python image_diversity.py --noun [entity] --csv-path [pat
 Similarly for calculating diversity of captions, run the following code:
 ```bash
 CUDA_VISIBLE_DEVICES=0 python text_diversity.py --noun [entity] --csv-path [path to the csv file containing the captions and image paths] --dataset [laion-en, datacomp, Jap, Hin, Gre, Spa] --country-col [column name containing the geo-profiled country name] --annotation-col [column name containing the entity-presence classifier predictions] --vendi
+```
+
+## Citation
+
+If you use this code or dataset in your research, please cite:
+
+```bibtex
+@misc{basu2026imagescomefromanalyzing,
+      title={Where Do Images Come From? Analyzing Captions to Geographically Profile Datasets}, 
+      author={Abhipsa Basu and Yugam Bahl and Kirti Bhagat and Preethi Seshadri and R. Venkatesh Babu and Danish Pruthi},
+      year={2026},
+      eprint={2602.09775},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2602.09775}, 
+}
 ```
