@@ -1,4 +1,6 @@
-# Geographical Profiling of Datasets
+# Where Do Images Come From? Analyzing Captions to Geograpically Profile Datasets
+
+**Paper:** [arXiv](https://arxiv.org/pdf/2602.09775) | **Project Page:** [geoprofiling.github.io](https://geoprofiling.github.io/)
 
 This repository provides all the necessary code for the geolocalization of popular vision-language datasets. The repo assumes access to image urls and captions from a given dataset $\mathcal{D}_e$ with respect to an entity $e$ such that each caption in $\mathcal{D}_e$ contains the word $e$. The goal of this project is to understand the geographical distribution of various concepts like house/car etcThis will provide us with effective insights of various geographical and cultural stereotypes which Generative Models reflect now. In the end, we also want to analyse the dataset with metrics like Diversity across images.
 
@@ -14,7 +16,7 @@ The directory structure is as follows:
 
 `data`: Directory having important details, like country-wise GDP, country-continent mapping, etc. 
 
-`data/evaluation_data.csv`: Consists of the 65000 image caption pairs whose ground truth and gemini country predictions are provided in the csv. The csv file contains all the evaluation datasets: a. the self annotated $\mathcal{D}_{\text{self}}$ (set the data column value to 2), b. the captions on marginalized countries $\mathcal{D}_{\text{marginalized}}$ (set the data column value to 0), and c. the captions curated using locations from the GeoNames dataset $\mathcal{D}_{\text{geo}}$ (set the data column value to 1).
+`data/evaluation_data.csv`: Consists of the 65000 sentences whose ground truth and gemini's country predictions are provided in the csv. The csv file contains all the evaluation datasets: a. the self annotated $\mathcal{D}_{\text{self}}$ (set the data column value to 2), b. the captions on marginalized countries $\mathcal{D}_{\text{marginalized}}$ (set the data column value to 0), and c. the captions curated using locations from the GeoNames dataset $\mathcal{D}_{\text{geo}}$ (set the data column value to 1).
 
 `models`: Directory having the SVM trained models for each entity.
 
@@ -26,9 +28,9 @@ To automatically classify images whose captions mention a certain entity e, on t
 python svm_laion.py --noun [entity] --device cuda:0 --csv_path [csv-file containing the image paths] --directory [image-directory-path]
 ```
 
-## GeoProfile Captions using the LLaMA 3.1 8B Instruct Model:
+## GeoProfile Captions using the Gemini--2.5--flash Model:
 
-To extract locations from captions (in English) mentioning a certain entity using a powerful LLM (we use Gemini--2.5--flash here), run the following code:
+To extract locations from captions (in English) mentioning a certain entity using a powerful LLM (we use Gemini--2.5--flash here), first download and install [gcloud CLI](https://docs.cloud.google.com/sdk/docs/install-sdk) and set up a project on the [gcloud console](https://cloud.google.com/) . Then run the following code:
 ```bash
 python gemini_llm_batch.py --newcsvpath [path to the csv file containing $\mathcal{D}_e$] --text_col [the name of the column containing the English captions]
 ```
